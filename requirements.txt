@@ -1,0 +1,11 @@
+cmake
+dlib==19.8.1
+opencv-python
+flask
+flask_SQLAlchemy
+flask_bcrypt
+flask_login
+flask_wtf
+wtforms
+pillow
+face_recognition
