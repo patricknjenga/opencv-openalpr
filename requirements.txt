@@ -1,3 +1,5 @@
+openalpr
+numpy
 cmake
 dlib==19.8.1
 opencv-python

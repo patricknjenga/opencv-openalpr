@@ -1,23 +1,19 @@
 from datetime import datetime
 
-from flask_login import UserMixin
-
-from security import db, login_manager
+from security import db
 from security.models.Image import Image
 
 
-@login_manager.user_loader
-def load_user(user_id):
-    return User.query.get(int(user_id))
-
-
-class User(db.Model, UserMixin):
+class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(20), unique=True, nullable=False)
-    email = db.Column(db.String(120), unique=True, nullable=False)
-    password = db.Column(db.String(60), nullable=False)
-    date_created = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+    name = db.Column(db.String(120), unique=True, nullable=False)
     images = db.relationship(Image, backref='user', lazy=True)
+    license_plate = db.Column(db.String(120), unique=True, nullable=False)
+    date_created = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
 
-    def __repr__(self):
-        return f"User('{self.username}', '{self.email}', '{self.image_file}')"
+
+def query(name=None, license_plate=None):
+    if name:
+        return User.query.filter_by(name=name).first()
+    if license_plate:
+        return User.query.filter_by(license_plate=license_plate).first()

@@ -1,25 +1,79 @@
 {% extends "layout.html" %}
 {% block content %}
-	<div class="container py-5">
-		<form method="POST" action="" enctype="multipart/form-data">
-			{{ form.hidden_tag() }}
-			<div class="input-group">
-				<div class="input-group-prepend">
-					<span class="input-group-text" id="inputGroupFileAddon01">Upload</span>
-				</div>
-				<div class="custom-file">
-					{{ form.picture(class="custom-file-input" ,id="inputGroupFile01") }}
-					<label class="custom-file-label" for="inputGroupFile01">Choose file</label>
-					{% if form.picture.errors %}
-						{% for error in form.picture.errors %}
-							<span class="text-danger">{{ error }}</span></br>
-						{% endfor %}
-					{% endif %}
-				</div>
+
+
+	<div class="container my-5">
+		<div class="row mx-1">
+			<h1 class="font-weight-light text-center text-lg-left mr-auto">Thumbnail Gallery</h1>
+			<div>
+				<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Add User
+				</button>
 			</div>
-			<div class="form-group my-3">
-				{{ form.submit(class='btn btn-outline-info') }}
+		</div>
+		<hr class="mt-2 mb-5">
+		<div class="row text-center text-lg-left">
+			{% for image in images %}
+				<div class="col-lg-3 col-md-4 col-6">
+					<a href="#" class="d-block mb-4 h-100" data-toggle="modal" data-target="#modal{{ image.id }}">
+						<img class="img-fluid img-thumbnail" src='{{ url_for('static',filename='images/'+image.file) }}'
+							 alt="Image">
+					</a>
+				</div>
+				<div class="modal fade" id="modal{{ image.id }}" aria-hidden="true">
+					<div class="modal-dialog" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title" id="exampleModalLabel">Preview Image</h5>
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
+							<img class="img-fluid img-thumbnail"
+								 src='{{ url_for('static',filename='images/'+image.file) }}' alt="Image">
+							<div class="modal-footer">
+								<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+								<button type="button" class="btn btn-danger">Delete</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			{% endfor %}
+		</div>
+	</div>
+	<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+		 aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">Create User</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<form method="POST" action="" enctype="multipart/form-data">
+						{{ form.hidden_tag() }}
+						<div class="input-group">
+							<div class="input-group-prepend">
+								<span class="input-group-text" id="inputGroupFileAddon01">Upload</span>
+							</div>
+							<div class="custom-file">
+								{{ form.picture(class="custom-file-input" ,id="inputGroupFile01") }}
+								<label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+								{% if form.picture.errors %}
+									{% for error in form.picture.errors %}
+										<span class="text-danger">{{ error }}</span>
+									{% endfor %}
+								{% endif %}
+							</div>
+						</div>
+						<div class="form-group my-3">
+							{{ form.submit(class='btn btn-outline-info') }}
+						</div>
+					</form>
+				</div>
+
 			</div>
-		</form>
+		</div>
 	</div>
 {% endblock content %}

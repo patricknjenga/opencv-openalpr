@@ -2,9 +2,8 @@ from flask import Response, redirect, url_for
 from flask_login import login_required
 
 from security import app, db
-from security.controllers import UserController, MainController, ImageController
-# Main Routes
-from security.controllers.MainController import get_frame
+from security.controllers import AdminController, MainController, ImageController, UserController
+from security.controllers.MainController import face_camera, vehicle_camera
 
 
 @app.route('/reset')
@@ -15,43 +14,50 @@ def reset():
     return redirect(url_for('home'))
 
 
+# Main Routes
 @app.route('/')
 @login_required
 def home():
     return MainController.main()
 
 
-# User Routes
+# Admin Routes
 @app.route("/register", methods=['GET', 'POST'])
 def register():
-    return UserController.register()
+    return AdminController.register()
 
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-    return UserController.login()
+    return AdminController.login()
 
 
 @app.route('/logout')
 @login_required
 def logout():
-    return UserController.logout()
+    return AdminController.logout()
+
+
+# User Routes
+@app.route("/create", methods=['GET', 'POST'])
+def create():
+    return UserController.create()
 
 
 # Image Routes
-@app.route("/image", methods=['GET', 'POST'])
+@app.route("/user/<user>/image", methods=['GET', 'POST'])
 @login_required
-def image():
-    return ImageController.create()
+def image(user):
+    return ImageController.create(user)
 
 
-@app.route("/gallery", methods=['GET', 'POST'])
+@app.route('/camera1')
 @login_required
-def gallery():
-    return ImageController.gallery()
+def camera_1():
+    return Response(vehicle_camera(), mimetype='multipart/x-mixed-replace; boundary=frame')
 
 
-@app.route('/calc')
+@app.route('/camera2')
 @login_required
-def calc():
-    return Response(get_frame(), mimetype='multipart/x-mixed-replace; boundary=frame')
+def camera_2():
+    return Response(face_camera(), mimetype='multipart/x-mixed-replace; boundary=frame')
