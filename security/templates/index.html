@@ -1,13 +1,13 @@
 {% extends "layout.html" %}
 {% block content %}
-	<div class="container row my-5 mx-auto text-center ">
-		<div class="col-lg-6 col-md-12">
-			<h4>Face Identification</h4>
-			<img class="img-fluid" src="{{ url_for('camera_1') }}" alt="Face Identification">
-		</div>
+	<div class="container-fluid row my-5 mx-auto text-center ">
 		<div class="col-lg-6 col-md-12">
 			<h4>License Plate Recognition</h4>
-			<img class="img-fluid" src="{{ url_for('camera_2') }}" alt="License Plate Recognition">
+			<img class="img-thumbnail" src="{{ url_for('camera_1') }}" alt="Face Identification">
+		</div>
+		<div class="col-lg-6 col-md-12">
+			<h4>Face Identification</h4>
+			<img class="img-thumbnail" src="{{ url_for('camera_2') }}" alt="License Plate Recognition">
 		</div>
 	</div>
 {% endblock content %}

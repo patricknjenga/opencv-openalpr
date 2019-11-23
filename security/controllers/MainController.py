@@ -1,6 +1,6 @@
 from flask import render_template
 
-from security.utils.FaceRecognition import init
+from security.utils.FaceRecognition import face_identification
 from security.utils.VehicleRecognition import vehicle_recognition
 
 
@@ -9,7 +9,7 @@ def main():
 
 
 def face_camera():
-    for frame in init():
+    for frame in face_identification():
         yield (frame)
 
 

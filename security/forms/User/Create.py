@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField
+from wtforms import StringField, SubmitField
 from wtforms.validators import DataRequired, ValidationError
 
 from security.models import User
@@ -7,7 +7,7 @@ from security.models import User
 
 class Form(FlaskForm):
     name = StringField('Name', validators=[DataRequired()])
-    license_plate = PasswordField('License Plate', validators=[DataRequired()])
+    license_plate = StringField('License Plate', validators=[DataRequired()])
     submit = SubmitField('Submit')
 
     def validate_license_plate(self, license_plate):

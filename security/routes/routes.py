@@ -39,8 +39,9 @@ def logout():
 
 
 # User Routes
-@app.route("/create", methods=['GET', 'POST'])
-def create():
+@app.route("/user", methods=['GET', 'POST'])
+@login_required
+def user():
     return UserController.create()
 
 

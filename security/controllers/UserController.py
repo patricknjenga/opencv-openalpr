@@ -1,4 +1,4 @@
-from flask import render_template, flash
+from flask import render_template, flash, redirect, url_for
 
 from security import db
 from security.forms.User import Create
@@ -13,5 +13,5 @@ def create():
         db.session.add(user)
         db.session.commit()
         flash('User has been created', 'success')
-        return render_template('user.html', title='Register', form=form, users=users)
+        return redirect(url_for('user'))
     return render_template('user.html', title='Register', form=form, users=users)

@@ -4,7 +4,7 @@ import secrets
 
 import face_recognition
 from PIL import Image
-from flask import flash, render_template
+from flask import flash, render_template, redirect, url_for
 
 from security import app, db
 from security.forms.Image import Create
@@ -29,6 +29,7 @@ def create(user):
                 flash('Image saved', 'success')
             else:
                 flash('Face Cannot be Identified', 'danger')
+            return redirect(url_for('image', user=user.id))
 
     return render_template('image.html', title='Store Image', form=form, user=user, images=images)
 
