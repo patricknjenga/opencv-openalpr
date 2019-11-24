@@ -3,7 +3,6 @@ from flask_login import login_required
 
 from security import app, db
 from security.controllers import AdminController, MainController, ImageController, UserController
-from security.controllers.MainController import face_camera, vehicle_camera
 
 
 @app.route('/reset')
@@ -46,19 +45,19 @@ def user():
 
 
 # Image Routes
-@app.route("/user/<user>/image", methods=['GET', 'POST'])
+@app.route("/user/<user_id>/image", methods=['GET', 'POST'])
 @login_required
-def image(user):
-    return ImageController.create(user)
+def image(user_id):
+    return ImageController.create(user_id)
 
 
-@app.route('/camera1')
+@app.route('/camera_1')
 @login_required
 def camera_1():
-    return Response(vehicle_camera(), mimetype='multipart/x-mixed-replace; boundary=frame')
+    return Response(MainController.face_id.main(), mimetype='multipart/x-mixed-replace; boundary=frame')
 
 
-@app.route('/camera2')
+@app.route('/camera_2')
 @login_required
 def camera_2():
-    return Response(face_camera(), mimetype='multipart/x-mixed-replace; boundary=frame')
+    return Response(MainController.vehicle_id.main(), mimetype='multipart/x-mixed-replace; boundary=frame')
