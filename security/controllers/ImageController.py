@@ -29,7 +29,7 @@ def create(user):
                 flash('Image saved', 'success')
             else:
                 flash('Face Cannot be Identified', 'danger')
-            return redirect(url_for('image', user=user.id))
+            return redirect(url_for('image', user_id=user.id))
 
     return render_template('image.html', title='Store Image', form=form, user=user, images=images)
 

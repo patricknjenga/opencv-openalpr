@@ -1,4 +1,5 @@
-from security import app
+from security import app, socketio
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.debug = True
+    socketio.run(app)

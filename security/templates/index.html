@@ -1,13 +1,55 @@
 {% extends "layout.html" %}
 {% block content %}
-	<div class="container-fluid row my-5 mx-auto text-center ">
-		<div class="col-lg-6 col-md-12">
-			<h4>License Plate Recognition</h4>
-			<img class="img-thumbnail" src="{{ url_for('camera_1') }}" alt="Face Identification">
+	<script type="text/javascript" charset="utf-8">
+        $(document).ready(function () {
+            let socket = io.connect("http://127.0.0.1:5000");
+            socket.on('message', function (user) {
+                let table = document.getElementById("table");
+                while (table.rows.length > 1) {
+                    table.deleteRow(1);
+                }
+                for (let key in user) {
+                    let row = table.insertRow(key);
+                    let cell1 = row.insertCell(0);
+                    let cell2 = row.insertCell(1);
+                    let cell3 = row.insertCell(2);
+                    cell1.innerHTML = user[key][0];
+                    cell2.innerHTML = user[key][1];
+                    cell3.innerHTML = user[key][2];
+                }
+            })
+        })
+	</script>
+
+	<div class="container">
+		<div class=" row my-2 mx-auto text-center ">
+			<div class="col-lg-6 col-md-12">
+				<h4>Face Identification</h4>
+				<img class="img-thumbnail" src="{{ url_for('camera_1') }}" alt="License Plate Recognition">
+			</div>
+			<div class="col-lg-6 col-md-12">
+				<h4>License Plate Recognition</h4>
+				<img class="img-thumbnail" src="{{ url_for('camera_2') }}" alt="Face Identification">
+			</div>
 		</div>
-		<div class="col-lg-6 col-md-12">
-			<h4>Face Identification</h4>
-			<img class="img-thumbnail" src="{{ url_for('camera_2') }}" alt="License Plate Recognition">
-		</div>
+		<table class="table" id="table">
+			<thead>
+				<tr>
+					<th scope="col">#</th>
+					<th scope="col">Name</th>
+					<th scope="col">License Plate</th>
+				</tr>
+			</thead>
+			<tbody id="table_body"></tbody>
+		</table>
 	</div>
 {% endblock content %}
+
+
+
+
+
+
+
+
+

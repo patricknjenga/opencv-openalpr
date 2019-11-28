@@ -17,7 +17,7 @@ def reset():
 @app.route('/')
 @login_required
 def home():
-    return MainController.main()
+    return MainController.index()
 
 
 # Admin Routes
@@ -54,10 +54,9 @@ def image(user_id):
 @app.route('/camera_1')
 @login_required
 def camera_1():
-    return Response(MainController.face_id.main(), mimetype='multipart/x-mixed-replace; boundary=frame')
-
+    return Response(MainController.face(), mimetype='multipart/x-mixed-replace; boundary=frame')
 
 @app.route('/camera_2')
 @login_required
 def camera_2():
-    return Response(MainController.vehicle_id.main(), mimetype='multipart/x-mixed-replace; boundary=frame')
+    return Response(MainController.vehicle(), mimetype='multipart/x-mixed-replace; boundary=frame')
